@@ -1,7 +1,7 @@
 <?php
 
 
-require_once "./vendor/autoload.php";
+require_once "./../vendor/autoload.php";
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Twilio\TwiML\MessagingResponse;
