@@ -4,8 +4,42 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Session;
 class Sms extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        "sender", "receiver", "msg", "session_id", "isClient"
+    ];
+
+    public static function getSession($isClient, $client_number) {
+        if ($isClient && !Session::where("client_number", $client_number)->first()){
+            return Session::create([
+                "client_number" => $client_number
+            ]);
+        }
+        else
+        {
+            return Session::where("client_number", $client_number)->first();
+        }
+    }
+
+    public static function createSms($sms, $isClient): self{
+        if ($isClient)
+        {
+            $session = self::getSession($isClient, $sms["sender"]);
+        }
+        else
+        {
+            $session = self::getSession($isClient, $sms["receiver"]);
+        }
+        return self::create([
+            "sender" => $sms["sender"],
+            "receiver" => $sms["receiver"],
+            "msg" => $sms["msg"],
+            "session_id" => $session->id,
+            "isClient" => $isClient,
+        ]);
+    }
 }
+
