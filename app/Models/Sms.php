@@ -41,5 +41,15 @@ class Sms extends Model
             "isClient" => $isClient,
         ]);
     }
+    public static function sendToClient($receiver, $sender, $body)
+    {
+         // Set the content-type to XML to send back TwiML from the PHP Helper Library
+         header("content-type: text/xml");
+         // message is the text to return to the user
+         $response = new MessagingResponse();
+
+         $response->message($receiver, $sender, $body);
+         echo $response;
+    }
 }
 

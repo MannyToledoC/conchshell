@@ -88,6 +88,13 @@ class SmsController extends Controller
         echo $response;
     }
 
+    public function send(Request $request)
+    {
+        Sms::sendToClient($request->receiver, $request->sender, $request->body);
+        echo($request);
+        echo("sent");
+    }
+
     /**
      * Display the specified resource.
      *
