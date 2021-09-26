@@ -16,8 +16,14 @@ class CreateSmsTable extends Migration
         Schema::create('sms', function (Blueprint $table) {
             $table->id();
             $table->string('sender');
-            $table->string('reciever');
+            $table->string('receiver');
             $table->string('msg');
+
+            $table->unsignedBigInteger('session_id');
+            $table->foreign('session_id')->references('id')->on('sessions')->onDelete('cascade');;
+
+            $table->boolean("isClient")->default(true);
+
             $table->timestamps();
         });
     }

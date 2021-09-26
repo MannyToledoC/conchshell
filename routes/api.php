@@ -5,6 +5,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Twilio\TwiML\MessagingResponse;
+use App\Http\Controllers\SmsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,11 +25,15 @@ Route::post('/listen',function(Request $request){
   header("content-type: text/xml");
   // message is the text to return to the user
   $response = new MessagingResponse();
+
   $response->message(
       $request->Body
   );
   echo $response;
 });
+
+Route::post('/test',[SmsController::class, 'store']);
+Route::get('/sms',[SmsController::class, 'index']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
