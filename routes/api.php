@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 use Twilio\TwiML\MessagingResponse;
 use App\Http\Controllers\SmsController;
 
+use App\Http\Controllers\AuthController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -30,6 +32,13 @@ Route::post('/listen',function(Request $request){
       $request->Body
   );
   echo $response;
+});
+// both routes to register and login a user.
+Route::post('/register',[AuthController::class, 'register']);
+Route::post('/login',[AuthController::class,'login']);
+// protected routes
+Route::group(['middleware' => ['auth,sanctum']],function(){
+  Route::post('/logout',[AuthController::class, 'logout']);
 });
 
 Route::post('/test',[SmsController::class, 'store']);
