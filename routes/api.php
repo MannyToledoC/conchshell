@@ -35,7 +35,7 @@ Route::post('/listen',function(Request $request){
 Route::post('/register',[AuthController::class, 'register']);
 Route::post('/login',[AuthController::class,'login']);
 // protected routes
-Route::group(['middleware' => ['auth,sanctum']],function(){
+Route::group(['middleware' => ['auth:sanctum']],function(){
   Route::post('/logout',[AuthController::class, 'logout']);
 });
 
